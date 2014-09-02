@@ -6,6 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var twitter = require('./routes/twitterReq.js');
 var http = require('http');
 var path = require('path');
 
@@ -21,6 +22,8 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/api/tweets', twitter);
 
 // development only
 if ('development' == app.get('env')) {
