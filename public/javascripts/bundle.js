@@ -24328,7 +24328,7 @@ return Q;
 }).call(this,require("FWaASH"))
 },{"FWaASH":3}],5:[function(require,module,exports){
 require('./twitterVis/main.js');
-},{"./twitterVis/main.js":7}],6:[function(require,module,exports){
+},{"./twitterVis/main.js":8}],6:[function(require,module,exports){
 var Q = require('q');
 var $ = require('jquery');
 
@@ -24376,6 +24376,14 @@ exports.getTweet =  function () {
 };
 
 },{"jquery":1,"q":4}],7:[function(require,module,exports){
+exports.changeColor = function (event) {
+  this.fillColor = 'red';
+};
+
+exports.resetColor = function (event) {
+  this.fillColor = 'black';
+};
+},{}],8:[function(require,module,exports){
 var paper = require('paper');
 var $ = require('jquery');
 
@@ -24386,7 +24394,7 @@ var loadTweets = require('../tweetLoader/tweetLoader.js').loadTweets;
 var preload = require('./preloadCanvas.js');
 var setupEvent = require('./setUpEvent.js');
 
-setTerm('paint');
+setTerm('#fml');
 var promise = loadTweets();
 
 var changeColor = function (event) {
@@ -24464,8 +24472,9 @@ $(function () {
 });
 
 
-},{"../tweetLoader/tweetLoader.js":6,"./preloadCanvas.js":8,"./setUpEvent.js":9,"./svgConsumer.js":10,"jquery":1,"paper":2}],8:[function(require,module,exports){
+},{"../tweetLoader/tweetLoader.js":6,"./preloadCanvas.js":9,"./setUpEvent.js":10,"./svgConsumer.js":11,"jquery":1,"paper":2}],9:[function(require,module,exports){
 var getTweet = require('../tweetLoader/tweetLoader.js').getTweet;
+var eventHandlers = require('./hoverEvents.js');
 
 module.exports = function (paper, path) {
   var totalOffset = 0;
@@ -24473,8 +24482,9 @@ module.exports = function (paper, path) {
   var step = 15;
   var point, tangent, group, angle, textPoint;
   while(totalOffset < path.length){
-    console.log(totalOffset, path.length);
     group = new paper.Group();
+    group.onMouseEnter = eventHandlers.changeColor;
+    group.onMouseLeave = eventHandlers.resetColor;
     for(var i = 0; i < tweet.textArr.length; i ++){
       if(totalOffset > path.length){
         continue;
@@ -24493,14 +24503,20 @@ module.exports = function (paper, path) {
     tweet = getTweet();
   }
 };
-},{"../tweetLoader/tweetLoader.js":6}],9:[function(require,module,exports){
+},{"../tweetLoader/tweetLoader.js":6,"./hoverEvents.js":7}],10:[function(require,module,exports){
+var getTweet = require('../tweetLoader/tweetLoader.js').getTweet;
+var eventHandlers = require('./hoverEvents.js');
+
 module.exports = function (paper) {
-  var tweet, group;
   var fullStep = 15;
-  var step = 5;
+  var step = 1;
+  var tweet = getTweet();
+  var group = new paper.Group();
+  group.onMouseEnter = eventHandlers.changeColor;
+  group.onMouseLeave = eventHandlers.resetColor;
   paper.view.onFrame = function (event) {
     var path = paper.project.activeLayer.children[0];
-    var point, tangent, item, group, angle;
+    var point, tangent, item, group, angle, textPoint;
 
     for (var i = 1; i < paper.project.activeLayer.children.length; i++) {
       group = paper.project.activeLayer.children[i];
@@ -24509,6 +24525,9 @@ module.exports = function (paper) {
         item.pathOffset += step;
         if(item.pathOffset >= path.length){
           item.remove();
+          if(!group.children.length){
+            group.remove();
+          }
         } else {
           point = path.getPointAt(item.pathOffset);
           tangent = path.getTangentAt(item.pathOffset).angle;
@@ -24520,28 +24539,27 @@ module.exports = function (paper) {
         }
       }
     }
-    // if(tweet  && tweet.textArr.length){
+    if(event.count > 0 && event.count % fullStep === 0){
+      if(!tweet.textArr.length){
+        tweet = getTweet();
+        group = new paper.Group();
+        group.onMouseEnter = eventHandlers.changeColor;
+        group.onMouseLeave = eventHandlers.resetColor;
+      }
+      point = path.getPointAt(0);
+      tangent = path.getTangentAt(0).angle;
+      textPoint = new paper.PointText(point);
+      textPoint.rotate(tangent);
+      textPoint.fillColor = 'black';
+      textPoint.fontSize = 18;
+      textPoint.pathOffset = 0;
+      textPoint.content = tweet.textArr.pop();
+      group.addChild(textPoint);
+    }
 
-  //     point = path.getPointAt(0);
-  //     tangent = path.getTangentAt(0).angle;
-  //     var textPoint = new paper.PointText(point);
-  //     textPoint.rotate(tangent);
-  //     textPoint.fillColor = 'black';
-  //     textPoint.fontSize = 18;
-  //     textPoint.pathOffset = 0;
-  //     textPoint.content = tweet.textArr.pop();
-  //     group.addChild(textPoint);
-  //   } else {
-  //     tweet = getTweet();
-  //     group = (tweet !== undefined) ? new paper.Group() : undefined;
-  //     if(group){
-  //       group.onMouseEnter = changeColor;
-  //       group.onMouseLeave = resetColor;
-  //     }
-  //   }
   }
 }
-},{}],10:[function(require,module,exports){
+},{"../tweetLoader/tweetLoader.js":6,"./hoverEvents.js":7}],11:[function(require,module,exports){
 var $ = require('jquery');
 
 var svg = $('#TwitterPathSVG');

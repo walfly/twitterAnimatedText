@@ -3,9 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="792px" height="612px" viewBox="0 0 792 612" enable-background="new 0 0 792 612" xml:space="preserve">
-<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M333,216"/>
-<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M360,216"/>
-<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="251.001" y1="0" x2="251.001" y2="0"/>
-<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M279,351c0,0,99-279,189-189s76.5,274.5,0,198s0-351,0-198
-	S310.5,319.5,310.5,319.5S252,261,180,189s-117-27-72-72s162-180,162,0s18,135,18,135"/>
+<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M45,441c0,0,153-268,42-385C7.674-27.614,27.011,197.444,56,291
+	c22,71,62.917,185.574,70,222c21,108,53.131,71.997,54-54c1-145-58-64-67-46s65.54-143,94-143c36,0,39,54,39,99
+	c0,36-11.562-114.336,51-126c59-11,53,72,52,93s1.353-132.162,62-117c36,9,18.141,34.734,56,70c73,68,146.38-116.125,87-228
+	c-69-130-44.271,53.435-38,126c7,81,28.914,130.391,130,63c63-42,125-114,125-114"/>
 </svg>

@@ -1,4 +1,5 @@
 var getTweet = require('../tweetLoader/tweetLoader.js').getTweet;
+var eventHandlers = require('./hoverEvents.js');
 
 module.exports = function (paper, path) {
   var totalOffset = 0;
@@ -6,8 +7,9 @@ module.exports = function (paper, path) {
   var step = 15;
   var point, tangent, group, angle, textPoint;
   while(totalOffset < path.length){
-    console.log(totalOffset, path.length);
     group = new paper.Group();
+    group.onMouseEnter = eventHandlers.changeColor;
+    group.onMouseLeave = eventHandlers.resetColor;
     for(var i = 0; i < tweet.textArr.length; i ++){
       if(totalOffset > path.length){
         continue;

@@ -8,7 +8,7 @@ var loadTweets = require('../tweetLoader/tweetLoader.js').loadTweets;
 var preload = require('./preloadCanvas.js');
 var setupEvent = require('./setUpEvent.js');
 
-setTerm('paint');
+setTerm('#fml');
 var promise = loadTweets();
 
 var changeColor = function (event) {
