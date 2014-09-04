@@ -18,7 +18,7 @@ module.exports = function (paper, path) {
       tangent = path.getTangentAt(totalOffset).angle;
       textPoint = new paper.PointText(point);
       textPoint.rotate(tangent);
-      textPoint.fillColor = 'black';
+      textPoint.fillColor = '#fafcfb';
       textPoint.fontSize = 18;
       textPoint.pathOffset = totalOffset;
       textPoint.content = tweet.textArr[i];

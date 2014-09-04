@@ -18,14 +18,13 @@ module.exports = function (req, res) {
   }
   twitter.get('search/tweets', params, function (err, data, response) {
     var statuses = _.map(data.statuses, function (status) {
-      var text = status.user.screen_name + ': ' + status.text;
+      var text = ' @' + status.user.screen_name + ': ' + status.text;
       return {
         text: text,
         id: status.id_str,
         textArr: text.split('')
       }
     });
-    console.log('sending');
     res.send({
       latest: data.statuses[0].id,
       statuses: statuses

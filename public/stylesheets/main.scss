@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+  font:14px Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -10,8 +11,30 @@ a {
 .invitation-header{
   width: 100%;
   margin: 0;
+  padding: 0;
   top: 0;
   left: 0;
   position: relative;
+  display: block;
   height: 600px;
+  background: #6b96ad; /* Old browsers */
+  background: -moz-linear-gradient(top, #6b96ad 0%, #4388ad 40%, #0071ae 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6b96ad), color-stop(40%,#4388ad), color-stop(100%,#0071ae)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #6b96ad 0%,#4388ad 40%,#0071ae 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #6b96ad 0%,#4388ad 40%,#0071ae 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #6b96ad 0%,#4388ad 40%,#0071ae 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #6b96ad 0%,#4388ad 40%,#0071ae 100%); /* W3C */
+  .canvas{
+    position:relative;
+    display: block;
+    margin: auto;
+  }
+  .header-description{
+    position: absolute;
+    top: 70%;
+    left: 38%;
+    font-size: 32px;
+    color: #fcf423;
+    font-weight: 100;
+  }
 }

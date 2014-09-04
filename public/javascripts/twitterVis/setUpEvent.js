@@ -34,21 +34,26 @@ module.exports = function (paper) {
       }
     }
     if(event.count > 0 && event.count % fullStep === 0){
-      if(!tweet.textArr.length){
+      if(!tweet || !tweet.textArr.length){
         tweet = getTweet();
-        group = new paper.Group();
-        group.onMouseEnter = eventHandlers.changeColor;
-        group.onMouseLeave = eventHandlers.resetColor;
+        if(tweet){
+          group = new paper.Group();
+          group.onMouseEnter = eventHandlers.changeColor;
+          group.onMouseLeave = eventHandlers.resetColor;
+        }
       }
-      point = path.getPointAt(0);
-      tangent = path.getTangentAt(0).angle;
-      textPoint = new paper.PointText(point);
-      textPoint.rotate(tangent);
-      textPoint.fillColor = 'black';
-      textPoint.fontSize = 18;
-      textPoint.pathOffset = 0;
-      textPoint.content = tweet.textArr.pop();
-      group.addChild(textPoint);
+      if(tweet){
+        point = path.getPointAt(0);
+        tangent = path.getTangentAt(0).angle;
+        textPoint = new paper.PointText(point);
+        textPoint.rotate(tangent);
+        textPoint.fillColor = '#fafcfb';
+        textPoint.fontSize = 18;
+        textPoint.pathOffset = 0;
+        textPoint.content = tweet.textArr.pop();
+        group.addChild(textPoint);
+      }
+        
     }
 
   }

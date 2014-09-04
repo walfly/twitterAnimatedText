@@ -24377,11 +24377,11 @@ exports.getTweet =  function () {
 
 },{"jquery":1,"q":4}],7:[function(require,module,exports){
 exports.changeColor = function (event) {
-  this.fillColor = 'red';
+  this.fillColor = '#e3c193';
 };
 
 exports.resetColor = function (event) {
-  this.fillColor = 'black';
+  this.fillColor = '#fafcfb';
 };
 },{}],8:[function(require,module,exports){
 var paper = require('paper');
@@ -24394,7 +24394,7 @@ var loadTweets = require('../tweetLoader/tweetLoader.js').loadTweets;
 var preload = require('./preloadCanvas.js');
 var setupEvent = require('./setUpEvent.js');
 
-setTerm('#fml');
+setTerm('boats');
 var promise = loadTweets();
 
 var changeColor = function (event) {
@@ -24416,58 +24416,22 @@ $(function () {
   var path = new paper.Path(svg[0]);
   path.visible = false;
 
+  var fitContainer = function () {
+    var $canvas = $(paper.project.view.element);
+    var $parent = $canvas.parent();
+    var width = $parent.width() * 0.75;
+    var height = $parent.height();
+    var size = new paper.Size(width, height);
+    paper.project.view.setViewSize(size); 
+    // var canvas = paper.project;
+    // var parent = canvas.parentNode;
+  };
+
   promise.done(function () {
     preload(paper, path);
     setupEvent(paper);
+    fitContainer();
   });
-
-
-  // var tweet;
-  // var group;
-  // var distance;
-  // var pathFull = false;
-  // var renderFunction = function (event){
-  //   if(tweet  && tweet.textArr.length){
-  //     var path = paper.project.activeLayer.children[0];
-  //     var step = 15;
-  //     var point, tangent, item, group, angle;
-
-  //     for (var i = 1; i < paper.project.activeLayer.children.length; i++) {
-  //       group = paper.project.activeLayer.children[i];
-  //       for (var j = 0; j < group.children.length; j ++){
-  //         item = group.children[j];
-  //         item.pathOffset += step;
-  //         if(item.pathOffset >= path.length){
-  //           pathFull = true;
-  //           item.remove();
-  //         } else {
-  //           point = path.getPointAt(item.pathOffset);
-  //           tangent = path.getTangentAt(item.pathOffset).angle;
-  //           angle = tangent - item.rotation
-  //           item.position = point;
-  //           item.rotate(angle);
-  //         }
-  //       }
-  //     }
-
-  //     point = path.getPointAt(0);
-  //     tangent = path.getTangentAt(0).angle;
-  //     var textPoint = new paper.PointText(point);
-  //     textPoint.rotate(tangent);
-  //     textPoint.fillColor = 'black';
-  //     textPoint.fontSize = 18;
-  //     textPoint.pathOffset = 0;
-  //     textPoint.content = tweet.textArr.pop();
-  //     group.addChild(textPoint);
-  //   } else {
-  //     tweet = getTweet();
-  //     group = (tweet !== undefined) ? new paper.Group() : undefined;
-  //     if(group){
-  //       group.onMouseEnter = changeColor;
-  //       group.onMouseLeave = resetColor;
-  //     }
-  //   }
-  // };
 
 });
 
@@ -24493,7 +24457,7 @@ module.exports = function (paper, path) {
       tangent = path.getTangentAt(totalOffset).angle;
       textPoint = new paper.PointText(point);
       textPoint.rotate(tangent);
-      textPoint.fillColor = 'black';
+      textPoint.fillColor = '#fafcfb';
       textPoint.fontSize = 18;
       textPoint.pathOffset = totalOffset;
       textPoint.content = tweet.textArr[i];
@@ -24540,21 +24504,26 @@ module.exports = function (paper) {
       }
     }
     if(event.count > 0 && event.count % fullStep === 0){
-      if(!tweet.textArr.length){
+      if(!tweet || !tweet.textArr.length){
         tweet = getTweet();
-        group = new paper.Group();
-        group.onMouseEnter = eventHandlers.changeColor;
-        group.onMouseLeave = eventHandlers.resetColor;
+        if(tweet){
+          group = new paper.Group();
+          group.onMouseEnter = eventHandlers.changeColor;
+          group.onMouseLeave = eventHandlers.resetColor;
+        }
       }
-      point = path.getPointAt(0);
-      tangent = path.getTangentAt(0).angle;
-      textPoint = new paper.PointText(point);
-      textPoint.rotate(tangent);
-      textPoint.fillColor = 'black';
-      textPoint.fontSize = 18;
-      textPoint.pathOffset = 0;
-      textPoint.content = tweet.textArr.pop();
-      group.addChild(textPoint);
+      if(tweet){
+        point = path.getPointAt(0);
+        tangent = path.getTangentAt(0).angle;
+        textPoint = new paper.PointText(point);
+        textPoint.rotate(tangent);
+        textPoint.fillColor = '#fafcfb';
+        textPoint.fontSize = 18;
+        textPoint.pathOffset = 0;
+        textPoint.content = tweet.textArr.pop();
+        group.addChild(textPoint);
+      }
+        
     }
 
   }
